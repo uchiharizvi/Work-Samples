@@ -1,3 +1,68 @@
 openapi: 3.0.0
 info:
   title: DWBS-Provision Card API
+  description: <h1>ProvisionCard API provides the facility for digital channels to get encrypted data for native wallets and redirectUrl for PAZE and Paypal</h1>
+  version: 1.0.0
+
+paths:
+  /api/provisioncard/v1:
+    post:
+      tags:
+        - Provision Card
+      summary: Provision Card for all wallets.
+      description: ProvisionCard API provides the facility for digital channels to get encrypted data for native wallets and redirectUrl for PAZE and Paypal
+      operationId: provisionCard
+      parameters:
+        #header parameters
+        - $ref: '#/components/parameters/request_identifier_parameter'
+      requestBody:
+        description:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisionCardRequest'
+      responses:
+        '400':
+          description: Invalid Input.
+        '200':
+          description: The ProvisionCard Response.
+          headers:
+            X-REQUEST_ID:
+              $ref: '#/components/schemas/ProvisionCardRequest'
+            CONTENT-TYPE:
+              $ref: '#/components/schemas/ProvisionCardRequest'
+            X-CORRELTAION-ID:
+              $ref: '#/components/schemas/ProvisionCardRequest'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvisionCardResponse'
+              example:
+                {
+                  #Only one wallet name will be displayed at a time. Below response depicts all the possible values.
+                  "walletName":"APPLE_PAY/GOOGLE_PAY"
+                }
+components:
+  schemas:
+    ProvisionCardRequest:
+      type: object
+      required:
+        - walletName
+        - cardId
+      properties:
+        walletName:
+          type: string
+          description: Name of Wallet
+          example: APPLE_PAY
+          enum:
+            - APPLE_PAY
+        cardId:
+          type: string
+          description: Unique UUID
+          example: qwe75a9e-fa77-4a00-b660-fb00f8420asd
+
+        interdictionDetails:
+          $ref: '#/components/schemas/InterdictionDetails'
+
+
