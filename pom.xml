@@ -9,12 +9,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>wf-digitalwallets-presentation</module>
-        <module>wf-idad-service</module>
         <module>mphasis-apigee-automation</module>
         <module>mphasis-event-notification-service</module>
         <module>mphasis-apigee-connector-service</module>
-        <module>wf-dwbs-provision-card</module>
     </modules>
 
     <properties>
