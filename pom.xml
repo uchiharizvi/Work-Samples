@@ -14,6 +14,7 @@
         <module>mphasis-apigee-automation</module>
         <module>mphasis-event-notification-service</module>
         <module>mphasis-apigee-connector-service</module>
+        <module>wf-dwbs-provision-card</module>
     </modules>
 
     <properties>

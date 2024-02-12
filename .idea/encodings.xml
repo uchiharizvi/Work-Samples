@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/mphasis-apigee-automation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mphasis-apigee-automation/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mphasis-apigee-connector-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mphasis-apigee-connector-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mphasis-event-notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mphasis-event-notification-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
@@ -11,6 +13,8 @@
     <file url="file://$PROJECT_DIR$/wellsfargo-presentation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wf-digitalwallets-presentation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wf-digitalwallets-presentation/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wf-dwbs-provision-card/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wf-dwbs-provision-card/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wf-idad-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/wf-idad-service/src/main/resources" charset="UTF-8" />
   </component>
