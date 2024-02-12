@@ -50,19 +50,387 @@ components:
       required:
         - walletName
         - cardId
+
       properties:
         walletName:
           type: string
-          description: Name of Wallet
+          description: Name of Wallet for which card is to be provisioned.
           example: APPLE_PAY
           enum:
+            - GOOGLE_PAY
+            - SAMSUNG_PAY
+            - PAZE
+            - PAYPAL
             - APPLE_PAY
+
         cardId:
           type: string
-          description: Unique UUID
+          description: Unique UUID of the card.
           example: qwe75a9e-fa77-4a00-b660-fb00f8420asd
 
         interdictionDetails:
           $ref: '#/components/schemas/InterdictionDetails'
+        googlePayProvisionRequest:
+          $ref: '#/components/schemas/GooglePayProvisionRequest'
+        samsungPayProvisionRequest:
+          $ref: '#/components/schemas/SamsungPayProvisionRequest'
+        applePayProvisionRequest:
+          $ref: '#/components/schemas/ApplePayProvisionRequest'
+
+    GooglePayProvisionRequest:
+      type: object
+      required:
+        - deviceId
+        - walletUserId
+      properties:
+        deviceId:
+          type: string
+          description: GooglePay Wallet device ID.
+          example: ceykEUk00PFkNGzmSFpm4LjF
+        walletUserId:
+          type: string
+          description: GooglePay Wallet device User ID.
+          example: 9sQrKa4QQm7wTSZF1FIajW4g
+
+    ApplePayProvisionRequest:
+      type: object
+      required:
+        - nonce
+        - nonceSignature
+        - appleCertificate
+      properties:
+        nonce:
+          type: string
+          description: Encryption info for apple pay
+          example: ceykEUk00PFkNGzmSFpm4LjF
+        nonceSignature:
+          type: string
+          description: Signature for cryptographic nonce
+          example: 9sQrKa4QQm7wTSZF1FIajW4g
+        appleCertificate:
+          type: array
+          description: List of certificates
+          items:
+            type: string
+
+    SamsungPayProvisionRequest:
+      type: object
+      required:
+        - walletUserId
+        - deviceId
+        - walletDMId
+      properties:
+        walletDMId:
+          type: string
+          description: Manufacturer Id.
+          example: ceykEUk00PFkNGzmSFpm4LjF
+        deviceId:
+          type: string
+          description: Wallet device ID.
+          example: ceykEUk00PFkNGzmSFpm4LjF
+        walletUserId:
+          type: string
+          description: Wallet device User ID.
+          example: 9sQrKa4QQm7wTSZF1FIajW4g
+
+    InterdictionDetails:
+      type: object
+      required:
+        - status
+      properties:
+        wfId:
+          type: string
+        status:
+          type: boolean
+          example: true
+
+    ProvisionCardResponse:
+      type: object
+      properties:
+        walletName:
+          type: string
+          description: Name of the Wallet for which card is to be provisioned.
+          example: APPLE_PAY
+          enum:
+            - GOOGLE_PAY
+            - SAMSUNG_PAY
+            - PAZE
+            - PAYPAL
+            - APPLE_PAY
+
+        cardInfo:
+          $ref: '#/components/schemas/CardInfo'
+        googlePayProvisionResponse:
+          $ref: '#/components/schemas/GooglePayProvisionResponse'
+        samsungPayProvisionResponse:
+          $ref: '#/components/schemas/SamsungPayProvisionResponse'
+        applePayProvisionResponse:
+          $ref: '#/components/schemas/ApplePayProvisionResponse'
+        paypalProvisionResponse:
+          $ref: '#/components/schemas/PayPalProvisionResponse'
+        pazeProvisionResponse:
+          $ref: '#/components/schemas/PazeProvisionResponse'
+
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+    CardInfo:
+      type: object
+      properties:
+        cardName:
+          type: string
+          description: Name of the card
+          example: Platinum Debit Card
+        cardNumberMasked:
+          type: string
+          description: Masked Card Number
+          example: .....1234
+        cardType:
+          type: string
+          description: Type of card
+          example: DEBIT
+          enum:
+            - DEBIT
+            - CREDIT
+        cardNetwork:
+          type: string
+          description: Card Network Type
+          example: VISA
+
+    GooglePayProvisionResponse:
+      type: object
+      properties:
+        encryptedData:
+          type: string
+          description: Encrypted Data
+          example: eyJra9sQrKa4QQm7wTSZF1FIajW4geyJra9sQrKa4QQm7wTSZF1FIajW4g
+
+        cardHolderName:
+          type: string
+          description: Card Holder Name
+          example: JOHN DOE
+        tokenProvider:
+          type: string
+          description: Name of Token Provider
+          example: TOKEN_PROVIDER_VISA
+        address1:
+          type: string
+          description: Billing Address
+        administrativeArea:
+          type: string
+          description: Billing Address State Code
+          example: MN
+        countryCode:
+          type: string
+          description: Billing Address Country Code
+          example: US
+        locality:
+          type: string
+          description: Billing Address City
+          example: STILLWATER
+        postalCode:
+          type: string
+          description: Billing Address Postal Code
+          example: 55082
+
+    SamsungPayProvisionResponse:
+      type: object
+      properties:
+        encryptedData:
+          type: string
+          description: Encrypted Data
+
+    ApplePayProvisionResponse:
+      type: object
+      properties:
+        encryptedData:
+          type: string
+          description: Encrypted Data
+        wellsPublicKey:
+          type: string
+          description: Ephemeral Public Key
+          example: eyJra9sQrKa4QQm7wTSZF1FIajW4geyJra9sQrKa4QQm7wTSZF1FIajW4g
+        activationData:
+          type: string
+          description: Activation Data
+          example: eyJra9sQrKa4QQm7wTSZF1FIajW4geyJra9sQrKa4QQm7wTSZF1FIajW4g
+
+    PayPalProvisionResponse:
+      type: object
+      required:
+        - redirectUrl
+      properties:
+        providerReferenceId:
+          type: string
+          description: Provider Reference Id
+        redirectUrl:
+          type: string
+          description: Redirect Url
+        provisioningStatus:
+          type: boolean
+          description: Card Provisioning Status to Paypal
+
+    PazeProvisionResponse:
+      type: object
+      properties:
+        walletStatus:
+          type: string
+          description: Provider Reference Id
+        redirectUrl:
+          type: string
+          description: Redirect Url
+        provisioningStatus:
+          type: boolean
+          description: Status of EWS Wallet
+
+    Error:
+      type: object
+      required:
+        - errorCode
+      properties:
+        errorId:
+          type: string
+          description: GUID of the error
+        errorCode:
+          type: string
+          description: Error Code
+          example: ERR_00004_004
+        errorDetails:
+          type: string
+          description: Optional Human Readable Description
+          example: Service not available
+        errorPlacement:
+          type: string
+          description: Error occurrence level
+
+  parameters:
+    request_identifier_parameter:
+      name: X-REQUEST-ID
+      in: header
+      description: A unique identifier for a request coming from client
+      required: true
+      example: eyJra9sQrKa4QQm7wTSZF1FIajW4geyJra9sQrKa4QQm7wTSZF1FIajW4g
+      schema:
+        type: string
+        pattern: ''
+        format: UUID
+
+    request_time_stamp_parameter:
+      name: X-WF-REQUEST-DATE
+      in: header
+      description: Date/Timestamp
+      required: true
+      example: '2023-02-24T13:25:30.943-08:00'
+      schema:
+        type: string
+        pattern: ''
+        format: date-time
+    client_identifier:
+      name: X-WF-CLIENT-ID
+      in: header
+      description: App ID
+      required: true
+      example: DWBS
+      schema:
+        type: string
+        pattern: ''
+        minLength: 1
+        maxLength: 32
+    client_host:
+      name: X-WF-CLIENT-HOST
+      in: header
+      description: Host
+      required: false
+      example: mo1-005a-ixb-sl.wellsfargo.com
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+    content_type:
+      name: CONTENT-TYPE
+      in: header
+      description: Content-Type
+      required: false
+      example: application/json; charset=UTF-8
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+    accept:
+      name: Accept
+      in: header
+      description: Acceptable Response Format
+      required: false
+      example: application/json
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+    authorization:
+      name: Authorization
+      in: header
+      description: Authorization
+      required: true
+      example: x.y.z
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 16384
+    accept_language:
+      name: Accept-Language
+      in: header
+      description: Supported Language
+      required: false
+      example: en-us,en;
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+    orig_client_identifier:
+      name: X-WF-ORIG-CLIENT-ID
+      in: header
+      description: App ID of the first client in the call chain
+      required: false
+      example: DWBS
+      schema:
+        type: string
+        pattern: ''
+        minLength: 1
+        maxLength: 32
+    cmp_id:
+      name: X-WF-CMP-ID
+      in: header
+      description: Component Id
+      required: false
+      example: DWP
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 256
+    correlation_id:
+      name: X-CORRELATION-ID
+      in: header
+      description: Correlates HTTP requests
+      required: true
+      example: eyJra9sQrKa4QQm7w-TSZF1FIajW4geyJra9s-QrKa4QQm7wTSZF1FIajW4g
+      schema:
+        type: string
+        pattern: ''
+    session_id:
+      name: X-WF-SESSION-ID
+      in: header
+      description: UUID for the Session
+      required: false
+      example: eyJra9sQrKa4QQm7w-TSZF1FIajW4geyJra9s-QrKa4QQm7wTSZF1FIajW4g
+      schema:
+        type: string
+        pattern: ''
+
+
+
+
+
 
 
